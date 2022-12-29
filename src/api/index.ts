@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import { getConfigFile } from "medusa-core-utils"
 import { ConfigModule } from "@medusajs/medusa/dist/types/global"
-import cors from "cors"
 import errorHandler from "@medusajs/medusa/dist/api/middlewares/error-handler"
+import { featureFlagRouter } from "@medusajs/medusa/dist/loaders/feature-flags"
 //import bodyParser from 'body-parser';
 
 import admin from "./routes/admin"
 import store from "./routes/store"
+
+console.log('FF ROUTER LOG', featureFlagRouter)
 
 export default (rootDirectory : any, pluginOptions : any) => {
   const app = Router();
@@ -14,8 +16,8 @@ export default (rootDirectory : any, pluginOptions : any) => {
   const { configModule } = getConfigFile<ConfigModule>(rootDirectory, "medusa-config")
   const { projectConfig } = configModule
 
-  admin(app, projectConfig)
-  store(app, projectConfig)
+  admin(app, projectConfig, featureFlagRouter)
+  store(app, projectConfig, featureFlagRouter)
 
   app.use(errorHandler())
 

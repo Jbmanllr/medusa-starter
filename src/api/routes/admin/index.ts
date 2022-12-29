@@ -13,12 +13,11 @@ import rentalRoutes from "./rentals"
 import userRoutes, { unauthenticatedUserRoutes } from "@medusajs/medusa/dist/api/routes/admin/users"
 //import variantRoutes from "./variants"
 import { parseCorsOrigins } from "medusa-core-utils"
-import featureFlagLoader from "@medusajs/medusa/dist/loaders/feature-flags"
 import authenticate from "@medusajs/medusa/dist/api/middlewares/authenticate"
 
 const route = Router()
 
-export default (app : any, projectConfig : any) => {
+export default (app : any, projectConfig : any, featureFlagRouter : any) => {
   app.use("/admin", route)
 
   const adminCors = projectConfig.admin_cors || ""
@@ -28,11 +27,6 @@ export default (app : any, projectConfig : any) => {
       credentials: true,
     })
   )
-
-  //const featureFlagRouter = container.resolve("featureFlagRouter")
-  const featureFlagRouter = featureFlagLoader(projectConfig)
-
-  console.log('FF ROUTER LOG', featureFlagRouter)
 
   //route.use(authenticate())
 

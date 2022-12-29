@@ -2,15 +2,12 @@ import cors from "cors"
 import { Router } from "express"
 import { parseCorsOrigins } from "medusa-core-utils"
 import authenticate from "@medusajs/medusa/dist/api/middlewares/authenticate-customer"
-//import featureFlagLoader from "@medusajs/medusa/dist/loaders/feature-flags"
-
-import { featureFlagRouter } from "@medusajs/medusa/dist/loaders/feature-flags"
 
 import RentalRoutes from "./rentals"
 
 const route = Router()
 
-export default (app : any, projectConfig : any) => {
+export default (app : any, projectConfig : any, featureFlagRouter : any) => {
   app.use("/store", route)
 
   const storeCors = projectConfig.store_cors || ""
@@ -20,9 +17,6 @@ export default (app : any, projectConfig : any) => {
       credentials: true,
     })
   )
-  
-  //const featureFlagRouter = container.resolve("featureFlagRouter")
-  //const featureFlagRouter = featureFlagLoader(projectConfig)
 
   route.use(authenticate())
 
