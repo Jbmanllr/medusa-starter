@@ -32,6 +32,8 @@ export default (app : any, projectConfig : any) => {
   //const featureFlagRouter = container.resolve("featureFlagRouter")
   const featureFlagRouter = featureFlagLoader(projectConfig)
 
+  console.log('FF ROUTER LOG', featureFlagRouter)
+
   //route.use(authenticate())
 
   // Unauthenticated routes
