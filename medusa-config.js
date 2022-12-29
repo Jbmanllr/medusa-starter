@@ -29,6 +29,15 @@ const ADMIN_CORS = process.env.ADMIN_CORS || "http://localhost:7000,http://local
 const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
 
 // Database URL (here we use a local database called medusa-development)
+
+// postgres://postgres:postgres@postgres:5433/?user=postgres&password=postgres
+// postgres://localhost/medusa-docker?user=postgres&password=postgres
+// postgres://localhost/medusa-store?user=postgres&password=postgres
+
+
+// postgres://postgres:postgres@postgres:5433/medusa-docker
+// postgres://localhost/medusa-docker?user=postgres&password=postgres
+
 const DATABASE_URL =
   process.env.DATABASE_URL || "postgres://localhost/medusa-store";
 
@@ -43,6 +52,12 @@ const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 const plugins = [
   `medusa-fulfillment-manual`,
   `medusa-payment-manual`,
+ // `medusa-plugin-economic`,
+  //`medusa-plugin-discount-generator`,
+  //`medusa-plugin-wishlist`,
+  //`medusa-payment-paypal`,
+  //`medusa-plugin-sendgrid`,
+  //`medusa-plugin-restock-notification`
   // Uncomment to add Stripe support.
   // You can create a Stripe account via: https://stripe.com
   // {
@@ -64,6 +79,12 @@ module.exports = {
     database_type: "sqlite",
     store_cors: STORE_CORS,
     admin_cors: ADMIN_CORS,
+  },
+  featureFlags: {
+    tax_inclusive_pricing: true,
+    sales_channels: true,
+    publishable_api_keys: true,
+    order_editing: false
   },
   plugins,
 };

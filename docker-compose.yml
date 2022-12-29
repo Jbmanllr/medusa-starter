@@ -10,7 +10,7 @@ services:
       - postgres
       - redis
     environment:
-      DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa-docker
+      DATABASE_URL: postgres://postgres:postgres@postgres:5433/medusa-docker
       REDIS_URL: redis://redis
       NODE_ENV: development
       JWT_SECRET: something
@@ -25,7 +25,7 @@ services:
   postgres:
     image: postgres:10.4
     ports:
-      - "5432:5432"
+      - "5433:5433"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -35,6 +35,16 @@ services:
     image: redis
     expose:
       - 6379
+
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
 
 volumes:
   node_modules:
